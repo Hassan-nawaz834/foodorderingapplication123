@@ -16,7 +16,7 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app ./
 
 # Environment variables
-ENV MONGO_URI=mongodb://root:example@mongo:27017/mernapp?authSource=admin
+ENV MONGO_URI=mongodb://malikrashid:malikrashid@ac-ggtk7kz-shard-00-00.kk5lwo3.mongodb.net:27017,ac-ggtk7kz-shard-00-01.kk5lwo3.mongodb.net:27017,ac-ggtk7kz-shard-00-02.kk5lwo3.mongodb.net:27017/foodordering?replicaSet=atlas-13mxse-shard-0&ssl=true&authSource=admin
 ENV PORT=5000
 ENV NODE_ENV=production
 
