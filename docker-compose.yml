@@ -1,38 +1,26 @@
 version: '3.8'
 
 services:
-  mongo:
-    image: mongo:4.4
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongo-data:/data/db
-    restart: unless-stopped
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
-
-  backend:
-    build:
-      context: ./server
-      dockerfile: Dockerfile
-    ports:
-      - "5000:5000"
-    depends_on:
-      - mongo
-    restart: unless-stopped
-    environment:
-      MONGO_URI: mongodb://root:example@mongo:27017/mernapp?authSource=admin
-
   frontend:
-    build:
-      context: ./client
-      dockerfile: Dockerfile
+    build: ./frontend
     ports:
       - "80:80"
     depends_on:
       - backend
     restart: unless-stopped
+
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000"
+    environment:
+      - MONGO_URI=mongodb://malikrashid:malikrashid@ac-ggtk7kz-shard-00-00.kk5lwo3.mongodb.net:27017,ac-ggtk7kz-shard-00-01.kk5lwo3.mongodb.net:27017,ac-ggtk7kz-shard-00-02.kk5lwo3.mongodb.net:27017/foodordering?replicaSet=atlas-13mxse-shard-0&ssl=true&authSource=admin
+      - PORT=5000
+      - NODE_ENV=production
+    restart: unless-stopped
+
+
+
 
 volumes:
   mongo-data:
