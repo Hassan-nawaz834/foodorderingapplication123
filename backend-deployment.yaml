@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: your-backend-image:latest  # Replace with your built image tag
+        env:
+        - name: MONGO_URI
+          value: "mongodb://malikrashid:malikrashid@ac-ggtk7kz-shard-00-00.kk5lwo3.mongodb.net:27017,ac-ggtk7kz-shard-00-01.kk5lwo3.mongodb.net:27017,ac-ggtk7kz-shard-00-02.kk5lwo3.mongodb.net:27017/foodordering?replicaSet=atlas-13mxse-shard-0&ssl=true&authSource=admin"
+        - name: PORT
+          value: "5000"
+        - name: NODE_ENV
+          value: "production"
+        ports:
+        - containerPort: 5000
